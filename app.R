@@ -1,13 +1,16 @@
 library(shiny)
 library(bslib)
-library(dplyr)
-library(ggplot2)
+library(tidyverse)
 library(ggExtra)
 library(dados)
 
 df <- dados::dados_starwars
+
+df <- df |>
+  drop_na()
+
 # Find subset of columns that are suitable for scatter plot
-df_num <- df |> select(where(is.numeric))
+df_num <- df |> select(where(is.numeric)) 
 
 ui <- page_sidebar(
   sidebar = sidebar(
