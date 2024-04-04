@@ -22,7 +22,7 @@ ui <- page_sidebar(
       selected = unique(df$genero)
     ),
     hr(), # Add a horizontal rule
-    checkboxInput("por_genero", "Mostrar nomes", TRUE),
+    checkboxInput("por_genero", "Mostrar gêneros", TRUE),
     checkboxInput("mostrar_margins", "Mostrar marginal plots", TRUE),
     checkboxInput("smooth", "Add smoother"),
   ),
@@ -31,14 +31,14 @@ ui <- page_sidebar(
 
 server <- function(input, output, session) {
   subsetted <- reactive({
-    req(input$nome)
-    df |> filter(nome %in% input$nome)
+    req(input$genero)
+    df |> filter(genero %in% input$genero)
   })
 
   output$scatter <- renderPlot({
     p <- ggplot(subsetted(), aes(!!input$xvar, !!input$yvar)) + list(
       theme(legend.position = "bottom"),
-      if (input$por_nomes) aes(color = nome),
+      if (input$por_genero) aes(color = genero),
       geom_point(),
       if (input$smooth) geom_smooth()
     )
