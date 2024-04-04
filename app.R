@@ -8,14 +8,15 @@ df <- dados::dados_starwars
 
 df <- df |>
   drop_na()
+df$genero <- as.factor(df$genero)
 
 # Find subset of columns that are suitable for scatter plot
-df_num <- df |> select(where(is.numeric)) 
+df_num <- df |> select(where(is.numeric), -ano_nascimento) 
 
 ui <- page_sidebar(
   sidebar = sidebar(
-    varSelectInput("xvar", "X variable", df_num, selected = "Bill Length (mm)"),
-    varSelectInput("yvar", "Y variable", df_num, selected = "Bill Depth (mm)"),
+    varSelectInput("xvar", "X variable", df_num, selected = "altura"),
+    varSelectInput("yvar", "Y variable", df_num, selected = "massa"),
     checkboxGroupInput(
       "genero", "Filter by gênero",
       choices = unique(df$genero), 
